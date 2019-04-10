@@ -1,9 +1,10 @@
 public class HelloNumbers {
     public static void main(String[] args) {
-        int x = 0;
-        while (x < 10) {
+        int x = 0, i = 0;
+        while (i < 10) {
+            x = x + i;
             System.out.print(x + " ");
-            x = x + 1;
+            i = i + 1;
         }
     }
 }
