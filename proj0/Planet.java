@@ -1,15 +1,15 @@
 
 public class Planet {
 
-    static final double G = 6.67e-11;
-    public static String path = "images/";
+    private static final double G = 6.67e-11;
+    private static String path = "images/";
 
     public double xxPos;
     public double yyPos;
     public double xxVel;
     public double yyVel;
     public double mass;
-    String imgFileName;
+    public String imgFileName;
 
     public Planet(double xP, double yP, double xV,
                 double yV, double m, String img) {

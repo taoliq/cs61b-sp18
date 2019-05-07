@@ -28,14 +28,16 @@ public class NBody {
         return Planets;
     }
 
-    public static void drawBackground(double radius) {
+    private static void drawBackground(double radius) {
         StdDraw.setScale(-radius * 2, radius * 2);
         StdDraw.clear();
 
         StdDraw.picture(0, 0, imageToDraw);
-
-//        StdDraw.show();
-//        StdDraw.pause(2000);
+    }
+    private static void drawPlants(Planet[] planets) {
+        for (Planet p : planets) {
+            p.draw();
+        }
     }
 
     public static void main(String[] args) {
@@ -46,9 +48,7 @@ public class NBody {
         double radius = readRadius(filename);
 
         drawBackground(radius);
-        for (Planet p : planets) {
-            p.draw();
-        }
+        drawPlants(planets);
         StdDraw.show();
 
         StdDraw.enableDoubleBuffering();
@@ -65,11 +65,8 @@ public class NBody {
             }
 
             drawBackground(radius);
-            for (Planet p : planets) {
-                p.draw();
-            }
+            drawPlants(planets);
             StdDraw.show(20);
-//            StdDraw.pause(10);
 
             currentTime += dt;
         }
