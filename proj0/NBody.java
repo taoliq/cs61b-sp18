@@ -1,8 +1,7 @@
 
 public class NBody {
-    public static String imageToDraw = "images/starfield.jpg";
-    public static String path = "images/";
-
+    private static String imageToDraw = "images/starfield.jpg";
+    private static String path = "images/";
 
     public static double readRadius(String s) {
         In in = new In(s);
