@@ -31,7 +31,7 @@ public class ArrayDeque<T> {
                 System.arraycopy(arr, 0, newArr, len1, len2);
             }
         } else {
-            System.arraycopy(newArr, 0, arr, front, size);
+            System.arraycopy(arr, front, newArr, 0, size);
         }
         arr = newArr;
         front = 0;

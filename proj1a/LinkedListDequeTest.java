@@ -1,6 +1,6 @@
 /** Performs some basic linked list tests. */
 public class LinkedListDequeTest {
-	
+
 	/* Utility method for printing out empty checks. */
 	public static boolean checkEmpty(boolean expected, boolean actual) {
 		if (expected != actual) {
@@ -35,8 +35,7 @@ public class LinkedListDequeTest {
 	  * && is the "and" operation. */
 	public static void addIsEmptySizeTest() {
 		System.out.println("Running add/isEmpty/Size test.");
-		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-		/*
+//		/*
 		LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
@@ -58,7 +57,7 @@ public class LinkedListDequeTest {
 		lld1.printDeque();
 
 		printTestStatus(passed);
-		*/
+//		*/
 	}
 
 	/** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
@@ -66,27 +65,56 @@ public class LinkedListDequeTest {
 
 		System.out.println("Running add/remove test.");
 
-		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-		/*
+//		/*
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
-		// should be empty 
+		// should be empty
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
 		lld1.addFirst(10);
-		// should not be empty 
+		// should not be empty
 		passed = checkEmpty(false, lld1.isEmpty()) && passed;
 
 		lld1.removeFirst();
-		// should be empty 
+		// should be empty
 		passed = checkEmpty(true, lld1.isEmpty()) && passed;
 
 		printTestStatus(passed);
-		*/
+//		*/
 	}
 
+	public static void addGetTest() {
+
+		System.out.println("Running get test.");
+
+		ArrayDeque<Integer> ArrayDeque = new ArrayDeque<Integer>();
+		ArrayDeque.addFirst(0);
+		ArrayDeque.addFirst(1);
+		ArrayDeque.addFirst(2);
+		ArrayDeque.removeLast();
+		ArrayDeque.removeLast();
+		ArrayDeque.removeLast();
+		ArrayDeque.addFirst(4);
+		ArrayDeque.addLast(5);
+		ArrayDeque.addFirst(6);
+		ArrayDeque.removeLast();
+		ArrayDeque.removeLast();
+		ArrayDeque.removeLast();
+		ArrayDeque.addLast(9);
+		ArrayDeque.removeFirst();
+		ArrayDeque.addFirst(14);
+		ArrayDeque.addFirst(15);
+		ArrayDeque.addLast(17);
+		ArrayDeque.addLast(18);
+		ArrayDeque.removeFirst();
+		ArrayDeque.removeFirst();
+		ArrayDeque.removeFirst();
+		ArrayDeque.removeFirst();
+
+	}
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
+		addGetTest();
 	}
-} 
+}
