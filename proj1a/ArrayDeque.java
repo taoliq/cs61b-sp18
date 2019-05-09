@@ -25,10 +25,10 @@ public class ArrayDeque<T> {
             int len1 = arr.length - front;
             int len2 = rear;
             if (len1 > 0) {
-                System.arraycopy(newArr, 0, arr, front, len1);
+                System.arraycopy(arr, front, newArr, 0, len1);
             }
             if (len2 > 0) {
-                System.arraycopy(newArr, len1, arr, 0, len2);
+                System.arraycopy(arr, 0, newArr, len1, len2);
             }
         } else {
             System.arraycopy(newArr, 0, arr, front, size);

@@ -85,7 +85,7 @@ public class LinkedListDeque<T> {
 
     private T getRecHelper(Node node, int index) {
         if (node == sentinel) {
-           return null;
+            return null;
         }
         if (index == 0) {
             return node.item;
