@@ -1,10 +1,11 @@
 public class ArrayDeque<T> {
+    private static final int INITSIZE = 8;
     private T[] arr;
     private int size;
     private int front, rear;
 
     public ArrayDeque() {
-        arr = (T[]) new Object[8];
+        arr = (T[]) new Object[INITSIZE];
         front = 0;
         rear = 0;
         size = 0;
@@ -23,8 +24,12 @@ public class ArrayDeque<T> {
         if (front >= rear) {
             int len1 = arr.length - front;
             int len2 = rear;
-            System.arraycopy(newArr, 0, arr, front, len1);
-            System.arraycopy(newArr, len1, arr, 0, len2);
+            if (len1 > 0) {
+                System.arraycopy(newArr, 0, arr, front, len1);
+            }
+            if (len2 > 0) {
+                System.arraycopy(newArr, len1, arr, 0, len2);
+            }
         } else {
             System.arraycopy(newArr, 0, arr, front, size);
         }
@@ -79,12 +84,12 @@ public class ArrayDeque<T> {
             return null;
         }
 
+        if (arr.length > INITSIZE * 2 && size * 4 < arr.length) {
+            resize(arr.length / 2);
+        }
         T popItem = arr[front];
         front = increment(front);
         size--;
-        if (size * 4 < arr.length) {
-            resize(arr.length / 2);
-        }
         return popItem;
     }
 
@@ -93,12 +98,12 @@ public class ArrayDeque<T> {
             return null;
         }
 
+        if (arr.length > INITSIZE * 2 && size * 4 < arr.length) {
+            resize(arr.length / 2);
+        }
         rear = decrement(rear);
         T popItem = arr[rear];
         size--;
-        if (size * 4 < arr.length) {
-            resize(arr.length / 2);
-        }
         return popItem;
     }
 

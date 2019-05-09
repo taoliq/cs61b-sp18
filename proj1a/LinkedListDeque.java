@@ -74,8 +74,9 @@ public class LinkedListDeque<T> {
     public T get(int index) {
         Node ptr = sentinel.next;
         while (ptr != sentinel) {
-            if (index == 0)
+            if (index == 0) {
                 return ptr.item;
+            }
             ptr = ptr.next;
             index--;
         }
@@ -83,13 +84,13 @@ public class LinkedListDeque<T> {
     }
 
     private T getRecHelper(Node node, int index) {
-       if (node == sentinel) {
+        if (node == sentinel) {
            return null;
-       }
-       if (index == 0) {
-           return node.item;
-       }
-       return getRecHelper(node.next, index - 1);
+        }
+        if (index == 0) {
+            return node.item;
+        }
+        return getRecHelper(node.next, index - 1);
     }
 
     public T getRecursive(int index) {
