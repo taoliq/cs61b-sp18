@@ -86,29 +86,29 @@ public class LinkedListDequeTest {
 
 		System.out.println("Running get test.");
 
-		ArrayDeque<Integer> ArrayDeque = new ArrayDeque<Integer>();
-		ArrayDeque.addFirst(0);
-		ArrayDeque.addFirst(1);
-		ArrayDeque.addFirst(2);
-		ArrayDeque.removeLast();
-		ArrayDeque.removeLast();
-		ArrayDeque.removeLast();
-		ArrayDeque.addFirst(4);
-		ArrayDeque.addLast(5);
-		ArrayDeque.addFirst(6);
-		ArrayDeque.removeLast();
-		ArrayDeque.removeLast();
-		ArrayDeque.removeLast();
-		ArrayDeque.addLast(9);
-		ArrayDeque.removeFirst();
-		ArrayDeque.addFirst(14);
-		ArrayDeque.addFirst(15);
-		ArrayDeque.addLast(17);
-		ArrayDeque.addLast(18);
-		ArrayDeque.removeFirst();
-		ArrayDeque.removeFirst();
-		ArrayDeque.removeFirst();
-		ArrayDeque.removeFirst();
+		ArrayDeque<Integer> arrayDeque = new ArrayDeque<Integer>();
+		arrayDeque.addFirst(0);
+		arrayDeque.addFirst(1);
+		arrayDeque.addFirst(2);
+		arrayDeque.removeLast();
+		arrayDeque.removeLast();
+		arrayDeque.removeLast();
+		arrayDeque.addFirst(4);
+		arrayDeque.addLast(5);
+		arrayDeque.addFirst(6);
+		arrayDeque.removeLast();
+		arrayDeque.removeLast();
+		arrayDeque.removeLast();
+		arrayDeque.addLast(9);
+		arrayDeque.removeFirst();
+		arrayDeque.addFirst(14);
+		arrayDeque.addFirst(15);
+		arrayDeque.addLast(17);
+		arrayDeque.addLast(18);
+		arrayDeque.removeFirst();
+		arrayDeque.removeFirst();
+		arrayDeque.removeFirst();
+		arrayDeque.removeFirst();
 
 	}
 	public static void main(String[] args) {
