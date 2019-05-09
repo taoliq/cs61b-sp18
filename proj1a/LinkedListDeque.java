@@ -1,8 +1,8 @@
 public class LinkedListDeque<T> {
     private class Node {
-        public Node prev;
-        public T item;
-        public Node next;
+        private Node prev;
+        private T item;
+        private Node next;
 
         public Node(T item, Node prev, Node next) {
             this.item = item;
@@ -13,12 +13,6 @@ public class LinkedListDeque<T> {
 
     private Node sentinel;
     private int size;
-
-    public LinkedListDeque(T item) {
-        sentinel = new Node(null, null, null);
-        sentinel.prev = sentinel.next = new Node(item, sentinel, sentinel);
-        size = 1;
-    }
 
     public LinkedListDeque() {
         sentinel = new Node(null, null, null);
@@ -56,8 +50,9 @@ public class LinkedListDeque<T> {
     }
 
     public T removeFirst() {
-        if (sentinel.next == sentinel)
+        if (sentinel.next == sentinel) {
             return null;
+        }
         Node ptr = sentinel.next;
         sentinel.next = ptr.next;
         ptr.next.prev = sentinel;
@@ -66,8 +61,9 @@ public class LinkedListDeque<T> {
     }
 
     public T removeLast() {
-        if (sentinel.prev == sentinel)
+        if (sentinel.prev == sentinel) {
             return null;
+        }
         Node ptr = sentinel.prev;
         sentinel.prev = ptr.prev;
         ptr.prev.next = sentinel;
@@ -87,10 +83,12 @@ public class LinkedListDeque<T> {
     }
 
     private T getRecHelper(Node node, int index) {
-       if (node == sentinel)
+       if (node == sentinel) {
            return null;
-       if (index == 0)
+       }
+       if (index == 0) {
            return node.item;
+       }
        return getRecHelper(node.next, index - 1);
     }
 

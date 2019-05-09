@@ -3,14 +3,6 @@ public class ArrayDeque<T> {
     private int size;
     private int front, rear;
 
-    public ArrayDeque(T item) {
-        arr = (T[]) new Object[8];
-        arr[0] = item;
-        front = 0;
-        rear = 1;
-        size = 1;
-    }
-
     public ArrayDeque() {
         arr = (T[]) new Object[8];
         front = 0;
@@ -28,7 +20,7 @@ public class ArrayDeque<T> {
 
     private void resize(int newSize) {
         T[] newArr = (T[]) new Object[newSize];
-        if (front > rear) {
+        if (front >= rear) {
             int len1 = arr.length - front;
             int len2 = rear;
             System.arraycopy(newArr, 0, arr, front, len1);
@@ -42,16 +34,18 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (size == arr.length)
+        if (size == arr.length) {
             resize(arr.length * 2);
+        }
         front = decrement(front);
         arr[front] = item;
         size++;
     }
 
     public void addLast(T item) {
-        if (size == arr.length)
+        if (size == arr.length) {
             resize(arr.length * 2);
+        }
         arr[rear] = item;
         rear = increment(rear);
         size++;
@@ -67,38 +61,51 @@ public class ArrayDeque<T> {
 
     public void printDeque() {
         if (front > rear) {
-            for (int i = front; i < arr.length; i++)
+            for (int i = front; i < arr.length; i++) {
                 System.out.print(arr[i] + " ");
-            for (int i = 0; i < rear; i++)
+            }
+            for (int i = 0; i < rear; i++) {
                 System.out.print(arr[i] + " ");
+            }
         } else {
-            for (int i = front; i < rear; i++)
+            for (int i = front; i < rear; i++) {
                 System.out.print(arr[i] + " ");
-
+            }
         }
     }
 
     public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
+
         T popItem = arr[front];
         front = increment(front);
         size--;
-        if (size * 4 < arr.length)
+        if (size * 4 < arr.length) {
             resize(arr.length / 2);
+        }
         return popItem;
     }
 
     public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        }
+
         rear = decrement(rear);
         T popItem = arr[rear];
         size--;
-        if (size * 4 < arr.length)
+        if (size * 4 < arr.length) {
             resize(arr.length / 2);
+        }
         return popItem;
     }
 
     public T get(int index) {
-        if (index >= size)
+        if (index >= size) {
             return null;
+        }
         return arr[(front + index) % arr.length];
     }
 }
