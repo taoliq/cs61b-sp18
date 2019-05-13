@@ -18,8 +18,8 @@ public class TestOffByOne {
         assertTrue(offByOne.equalChars('4', '5'));
         assertFalse(offByOne.equalChars('0', '9'));
         for (int i = 32; i < 127; i++) {
-            assertTrue(offByOne.equalChars((char)i, (char)(i + 1)));
-            assertFalse(offByOne.equalChars((char)i, (char)(i + 2)));
+            assertTrue(offByOne.equalChars((char) i, (char) (i + 1)));
+            assertFalse(offByOne.equalChars((char) i, (char) (i + 2)));
         }
     }
 }
