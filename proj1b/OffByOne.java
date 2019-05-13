@@ -1,6 +1,5 @@
-import java.util.Comparator;
 
-public class OffByOne implements CharacterComparator{
+public class OffByOne implements CharacterComparator {
 
     @Override
     public boolean equalChars(char x, char y) {
