@@ -55,18 +55,28 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * Return oldest item, but don't remove it.
      */
     public T peek() {
+        if (isEmpty()) {
+            throw new RuntimeException("Ring Buffer Underflow");
+        }
         return rb[first];
     }
 
     private class ArrayRingBufferIterator implements Iterator<T> {
+        private int ptr;
+
+        public ArrayRingBufferIterator() {
+            ptr = first;
+        }
         @Override
         public boolean hasNext() {
-            return !isEmpty();
+            return ptr != last;
         }
 
         @Override
         public T next() {
-            return dequeue();
+            T returnItem = rb[ptr];
+            ptr = (ptr + 1) % capacity;
+            return returnItem;
         }
     }
 
