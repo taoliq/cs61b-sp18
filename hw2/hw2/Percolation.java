@@ -81,7 +81,7 @@ public class Percolation {
             throw new IndexOutOfBoundsException();
         }
 
-        return isOpened[getId(row, col)] && uf2.connected(top, getId(row, col));
+        return uf2.connected(top, getId(row, col));
     }
 
     public int numberOfOpenSites() {
@@ -89,7 +89,7 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        return numberOfOpenSites() > 0 && uf.connected(top, bottom);
+        return uf.connected(top, bottom);
     }
 
     public static void main(String[] args) {
