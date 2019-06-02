@@ -22,40 +22,54 @@ public class Percolation {
         bottom = N * N + 1;
         openSites = 0;
         isOpened = new boolean[N * N + 2];
-        for (int i = 0; i < N; i++) {
-            uf.union(top, getId(0, i));
-            uf2.union(top, getId(0, i));
-            uf.union(bottom, getId(N - 1, i));
-        }
     }
 
     private int getId(int row, int col) {
         return row * N + col;
     }
 
+    private boolean isPositionValid(int row, int col) {
+        return row >= 0 && row < N && col >= 0 && col < N;
+    }
+
     public void open(int row, int col) {
-        if (row < 0 || row >= N || col < 0 || col >= N) {
+        if (!isPositionValid(row, col)) {
             throw new IndexOutOfBoundsException();
         }
 
-        int id = getId(row, col);
-        if (isOpened[id]) {
+        if (isOpen(row, col)) {
             return;
         }
 
+        int id = getId(row, col);
         isOpened[id] = true;
         openSites += 1;
-        int[] neibors = new int[]{id + 1, id - 1, id + N, id - N};
-        for (int i : neibors) {
-            if (i >= 0 && i < N * N && isOpened[i]) {
-                uf.union(i, id);
-                uf2.union(i, id);
+
+        int[][] neibors = {
+                {row - 1, col},
+                {row + 1, col},
+                {row, col + 1},
+                {row, col - 1}
+        };
+        for (int[] nei : neibors) {
+            if (isPositionValid(nei[0], nei[1]) && isOpen(nei[0], nei[1])) {
+                int id2 = getId(nei[0], nei[1]);
+                uf.union(id, id2);
+                uf2.union(id, id2);
             }
+        }
+
+        if (row == 0) {
+            uf.union(top, id);
+            uf2.union(top, id);
+        }
+        if (row == N - 1) {
+            uf.union(bottom, id);
         }
     }
 
     public boolean isOpen(int row, int col) {
-        if (row < 0 || row >= N || col < 0 || col >= N) {
+        if (!isPositionValid(row, col)) {
             throw new IndexOutOfBoundsException();
         }
 
@@ -63,7 +77,7 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col) {
-        if (row < 0 || row >= N || col < 0 || col >= N) {
+        if (!isPositionValid(row, col)) {
             throw new IndexOutOfBoundsException();
         }
 
