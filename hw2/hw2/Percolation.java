@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private WeightedQuickUnionUF uf;
+    private WeightedQuickUnionUF uf2;
     private int openSites;
     private boolean[] isOpened;
     private int N;
@@ -15,14 +16,16 @@ public class Percolation {
             throw new IllegalArgumentException();
         }
         uf = new WeightedQuickUnionUF(N * N + 2);
+        uf2 = new WeightedQuickUnionUF(N * N + 2);
         this.N = N;
         top = N * N;
         bottom = N * N + 1;
         openSites = 0;
         isOpened = new boolean[N * N + 2];
         for (int i = 0; i < N; i++) {
-            uf.union(top, i);
-            uf.union(bottom, N * (N - 1) + i);
+            uf.union(top, getId(0, i));
+            uf2.union(top, getId(0, i));
+            uf.union(bottom, getId(N - 1, i));
         }
     }
 
@@ -46,6 +49,7 @@ public class Percolation {
         for (int i : neibors) {
             if (i >= 0 && i < N * N && isOpened[i]) {
                 uf.union(i, id);
+                uf2.union(i, id);
             }
         }
     }
@@ -63,7 +67,7 @@ public class Percolation {
             throw new IndexOutOfBoundsException();
         }
 
-        return isOpened[getId(row, col)] && uf.connected(top, getId(row, col));
+        return isOpened[getId(row, col)] && uf2.connected(top, getId(row, col));
     }
 
     public int numberOfOpenSites() {
@@ -77,13 +81,16 @@ public class Percolation {
     public static void main(String[] args) {
         Percolation percolation = new Percolation(5);
         assertFalse(percolation.percolates());
+        percolation.open(0, 0);
+        percolation.open(1, 1);
+        percolation.open(0, 1);
+        assertFalse(percolation.isOpen(1, 0));
         percolation.open(3, 4);
         percolation.open(2, 4);
         percolation.open(2, 2);
         percolation.open(2, 2);
         percolation.open(2, 3);
         percolation.open(0, 2);
-        assertEquals(5, percolation.numberOfOpenSites());
         percolation.open(1, 2);
         assertTrue(percolation.isFull(2, 2));
         percolation.open(4, 4);
