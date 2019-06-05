@@ -37,17 +37,11 @@ public class TestComplexOomage {
     @Test
     public void testWithDeadlyParams() {
         List<Oomage> deadlyList = new ArrayList<>();
-        int N = 1000;
+        List<Integer> params = new ArrayList<>();
+        int N = 100;
 
-        int c = StdRandom.uniform(0, 255);
         for (int i = 0; i < N; i += 1) {
-            List<Integer> params = new ArrayList<>();
-            int zeros = StdRandom.uniform(0, 9);
-            for (int j = 0; j < zeros; j += 1) {
-                params.add(0);
-            }
-            params.add(c);
-            assertEquals(new ComplexOomage(params).hashCode(), new ComplexOomage(params).hashCode());
+            params.add(2);
             deadlyList.add(new ComplexOomage(params));
         }
 
