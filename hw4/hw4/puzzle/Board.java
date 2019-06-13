@@ -1,15 +1,14 @@
 package hw4.puzzle;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 public class Board implements WorldState {
     private final int[][] tiles;
-    private final int N;
+    private final int size;
     private HashSet<WorldState> nbs = null;
 
     public Board(int[][] tiles) {
-        this.N = tiles.length;
+        this.size = tiles.length;
         this.tiles = copy2dArray(tiles);
     }
 
@@ -30,11 +29,11 @@ public class Board implements WorldState {
     }
 
     private boolean valiatePosition(int i, int j) {
-        return i >= 0 && i < N && j >= 0 && j < N;
+        return i >= 0 && i < size && j >= 0 && j < size;
     }
 
     public int size() {
-        return N;
+        return size;
     }
 
     public Iterable<WorldState> neighbors() {
@@ -49,8 +48,8 @@ public class Board implements WorldState {
                 {0, 1},
                 {0, -1}
         };
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 if (tileAt(i, j) == 0) {
                     x = i;
                     y = j;
@@ -83,9 +82,9 @@ public class Board implements WorldState {
 
     public int hamming() {
         int res = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                int goal = i * N + j + 1;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                int goal = i * size + j + 1;
                 if (tiles[i][j] != 0 && tiles[i][j] != goal) {
                     res++;
                 }
@@ -96,10 +95,10 @@ public class Board implements WorldState {
 
     public int manhattan() {
         int res = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                int x = (tiles[i][j] - 1) / N;
-                int y = (tiles[i][j] - 1) % N;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                int x = (tiles[i][j] - 1) / size;
+                int y = (tiles[i][j] - 1) % size;
                 if (tiles[i][j] != 0) {
                     res += Math.abs(x - i) + Math.abs(y - j);
                 }
@@ -128,16 +127,20 @@ public class Board implements WorldState {
             return false;
         }
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (this.tileAt(i, j) != that.tileAt(i, j)) {
-                    return false;
-                }
+        return this.hashCode() == that.hashCode();
+    }
 
+    @Override
+    public int hashCode() {
+        int result = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                result *= 10;
+                result += tiles[i][j];
             }
         }
 
-        return true;
+        return result;
     }
 
 
@@ -149,7 +152,7 @@ public class Board implements WorldState {
         s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tileAt(i,j)));
+                s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
         }
