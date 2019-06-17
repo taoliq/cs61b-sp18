@@ -66,21 +66,42 @@ public class CountingSort {
      * @param arr int array that will be sorted
      */
     public static int[] betterCountingSort(int[] arr) {
-        // find min
-        int min = Integer.MAX_VALUE;
+        // find negative array length
+        int negLen = 0;
         for (int i : arr) {
-            min = min < i ? min : i;
+            if (i < 0) {
+                negLen++;
+            }
         }
 
-        int[] newArr = new int[arr.length];
-        for (int i = 0; i < newArr.length; i++) {
-            newArr[i] = arr[i] - min;
+        int[] negArr = new int[negLen];
+        int[] posArr = new int[arr.length - negLen];
+        int i1 = 0;
+        int i2 = 0;
+
+        for (int element : arr) {
+            if (element < 0) {
+                negArr[i1++] = -element;
+            } else {
+                posArr[i2++] = element;
+            }
         }
 
-        int[] sorted = naiveCountingSort(newArr);
+        if (negLen > 0) {
+            negArr = naiveCountingSort(negArr);
+        }
+        if (arr.length - negLen > 0) {
+            posArr = naiveCountingSort(posArr);
+        }
 
-        for (int i = 0; i < newArr.length; i++) {
-            sorted[i] += min;
+        int[] sorted = new int[arr.length];
+        int j = 0;
+
+        for (int i = negArr.length - 1; i >= 0; i--) {
+            sorted[j++] = -negArr[i];
+        }
+        for (int i = 0; i < posArr.length; i++) {
+            sorted[j++] = posArr[i];
         }
 
         return sorted;

@@ -54,7 +54,7 @@ public class RadixSort {
         String[] sorted = new String[asciis.length];
         for (String s : asciis) {
             int id = index < s.length() ? (int) s.charAt(index) : 0;
-            int place = ++starts[id];
+            int place = starts[id]++;
             sorted[place] = s;
         }
         asciis = sorted;
