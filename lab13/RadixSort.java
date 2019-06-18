@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 /**
  * Class for doing Radix sort
@@ -38,26 +39,26 @@ public class RadixSort {
      * @param index The position to sort the Strings on.
      */
     private static void sortHelperLSD(String[] asciis, int index) {
-        int[] counts = new int[256];
+        int[] counts = new int[257];
         for (String s : asciis) {
-            int id = index < s.length() ? (int) s.charAt(index) : 0;
+            int id = index < s.length() ? (int) s.charAt(index) + 1 : 0;
             counts[id]++;
         }
 
-        int[] starts = new int[256];
+        int[] starts = new int[257];
         int pos = 0;
         for (int i = 0; i < counts.length; i++) {
             starts[i] = pos;
             pos += counts[i];
         }
 
-        String[] sorted = new String[asciis.length];
-        for (String s : asciis) {
-            int id = index < s.length() ? (int) s.charAt(index) : 0;
+        String[] original = new String[asciis.length];
+        System.arraycopy(asciis, 0, original, 0, asciis.length);
+        for (String s : original) {
+            int id = index < s.length() ? (int) s.charAt(index) + 1 : 0;
             int place = starts[id]++;
-            sorted[place] = s;
+            asciis[place] = s;
         }
-        asciis = sorted;
     }
 
     /**
@@ -73,5 +74,16 @@ public class RadixSort {
     private static void sortHelperMSD(String[] asciis, int start, int end, int index) {
         // Optional MSD helper method for optional MSD radix sort
         return;
+    }
+
+    public static void main(String[] args) {
+        String[] arr = {"abcdeds", ""};
+
+        String[] sorted = sort(arr);
+
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print("String " + i + " : ");
+            System.out.println(sorted[i]);
+        }
     }
 }
