@@ -41,7 +41,7 @@ public class RadixSort {
     private static void sortHelperLSD(String[] asciis, int index) {
         int[] counts = new int[257];
         for (String s : asciis) {
-            int id = index < s.length() ? (int) s.charAt(index) + 1 : 0;
+            int id = index < s.length() ? (int) s.charAt(index) : 256;
             counts[id]++;
         }
 
@@ -55,7 +55,7 @@ public class RadixSort {
         String[] original = new String[asciis.length];
         System.arraycopy(asciis, 0, original, 0, asciis.length);
         for (String s : original) {
-            int id = index < s.length() ? (int) s.charAt(index) + 1 : 0;
+            int id = index < s.length() ? (int) s.charAt(index) : 256;
             int place = starts[id]++;
             asciis[place] = s;
         }
@@ -77,13 +77,24 @@ public class RadixSort {
     }
 
     public static void main(String[] args) {
-        String[] arr = {"abcdeds", ""};
+        StringBuffer sb = new StringBuffer();
+        String[] arr = new String[2];
+        sb.append((char) 57);
+        sb.append((char) 13);
+        arr[0] = sb.toString();
+
+        sb = new StringBuffer();
+        sb.append((char) 245);
+        arr[1] = sb.toString();
 
         String[] sorted = sort(arr);
 
         for (int i = 0; i < arr.length; i++) {
             System.out.print("String " + i + " : ");
-            System.out.println(sorted[i]);
+            for (int k = 0; k < sorted[i].length(); k++) {
+                System.out.print((int) sorted[i].charAt(k) + " ");
+            }
+            System.out.println();
         }
     }
 }
