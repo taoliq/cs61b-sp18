@@ -23,10 +23,9 @@ public class RadixSort {
             maxLen = maxLen > s.length() ? maxLen : s.length();
         }
 
-        String[] sorted = new String[asciis.length];
-        System.arraycopy(asciis, 0, sorted, 0, asciis.length);
+        String[] sorted = asciis.clone();
         for (int i = maxLen - 1; i >= 0; i--) {
-            sortHelperLSD(sorted, i);
+            sorted = sortHelperLSD(sorted, i);
         }
 
         return sorted;
@@ -38,7 +37,7 @@ public class RadixSort {
      * @param asciis Input array of Strings
      * @param index The position to sort the Strings on.
      */
-    private static void sortHelperLSD(String[] asciis, int index) {
+    private static String[] sortHelperLSD(String[] asciis, int index) {
         int[] counts = new int[257];
         for (String s : asciis) {
             int id = index < s.length() ? (int) s.charAt(index) : 256;
@@ -52,13 +51,14 @@ public class RadixSort {
             pos += counts[i];
         }
 
-        String[] original = new String[asciis.length];
-        System.arraycopy(asciis, 0, original, 0, asciis.length);
-        for (String s : original) {
+        String[] sorted = new String[asciis.length];
+        for (String s : asciis) {
             int id = index < s.length() ? (int) s.charAt(index) : 256;
             int place = starts[id]++;
-            asciis[place] = s;
+            sorted[place] = s;
         }
+
+        return sorted;
     }
 
     /**
@@ -82,12 +82,12 @@ public class RadixSort {
         sb.append((char) 57);
         sb.append((char) 13);
         arr[0] = sb.toString();
-//        arr[0] = "5;\u0086\u0010·«\u0092B\u0006¤\u0082^";
+        arr[0] = "5;\u0086\u0010·«\u0092B\u0006¤\u0082^";
 
         sb = new StringBuffer();
         sb.append((char) 245);
         arr[1] = sb.toString();
-//        arr[1] = "û\u0002\u0014\u009E¿\u0018Ü¹D'â]";
+        arr[1] = "û\u0002\u0014\u009E¿\u0018Ü¹D'â]";
 
         String[] sorted = sort(arr);
 
