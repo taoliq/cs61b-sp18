@@ -25,7 +25,7 @@ public class RadixSort {
 
         String[] sorted = new String[asciis.length];
         System.arraycopy(asciis, 0, sorted, 0, asciis.length);
-        for (int i = 0; i < maxLen; i++) {
+        for (int i = maxLen - 1; i >= 0; i--) {
             sortHelperLSD(sorted, i);
         }
 
@@ -82,15 +82,18 @@ public class RadixSort {
         sb.append((char) 57);
         sb.append((char) 13);
         arr[0] = sb.toString();
+//        arr[0] = "5;\u0086\u0010·«\u0092B\u0006¤\u0082^";
 
         sb = new StringBuffer();
         sb.append((char) 245);
         arr[1] = sb.toString();
+//        arr[1] = "û\u0002\u0014\u009E¿\u0018Ü¹D'â]";
 
         String[] sorted = sort(arr);
 
         for (int i = 0; i < arr.length; i++) {
             System.out.print("String " + i + " : ");
+            System.out.println(sorted[i]);
             for (int k = 0; k < sorted[i].length(); k++) {
                 System.out.print((int) sorted[i].charAt(k) + " ");
             }
