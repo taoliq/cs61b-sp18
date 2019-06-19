@@ -40,7 +40,7 @@ public class RadixSort {
     private static String[] sortHelperLSD(String[] asciis, int index) {
         int[] counts = new int[257];
         for (String s : asciis) {
-            int id = index < s.length() ? (int) s.charAt(index) : 256;
+            int id = index < s.length() ? (int) s.charAt(index) + 1 : 0;
             counts[id]++;
         }
 
@@ -53,7 +53,7 @@ public class RadixSort {
 
         String[] sorted = new String[asciis.length];
         for (String s : asciis) {
-            int id = index < s.length() ? (int) s.charAt(index) : 256;
+            int id = index < s.length() ? (int) s.charAt(index) + 1 : 0;
             int place = starts[id]++;
             sorted[place] = s;
         }
@@ -78,7 +78,7 @@ public class RadixSort {
 
     public static void main(String[] args) {
         StringBuffer sb = new StringBuffer();
-        String[] arr = new String[2];
+        String[] arr = new String[3];
         sb.append((char) 57);
         sb.append((char) 13);
         arr[0] = sb.toString();
@@ -88,6 +88,8 @@ public class RadixSort {
         sb.append((char) 245);
         arr[1] = sb.toString();
         arr[1] = "û\u0002\u0014\u009E¿\u0018Ü¹D'â]";
+
+        arr[2] = "";
 
         String[] sorted = sort(arr);
 
