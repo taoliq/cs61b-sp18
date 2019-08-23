@@ -1,5 +1,6 @@
-import java.awt.*;
 import edu.princeton.cs.algs4.Picture;
+
+import java.awt.*;
 
 public class SeamCarver {
     private Picture picture;
@@ -9,7 +10,7 @@ public class SeamCarver {
     }
 
     public Picture picture() {                  // current picture
-        return this.picture;
+        return new Picture(this.picture);
     }
 
     public int width() {                        // width of current picture
@@ -64,7 +65,7 @@ public class SeamCarver {
 
         for (int i = 0; i < this.width(); i++) {
             for (int j = 0; j < this.height(); j++) {
-                e[i][j] = (int)this.energy(i, j);
+                e[i][j] = (int) this.energy(i, j);
             }
         }
 
