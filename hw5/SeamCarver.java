@@ -1,12 +1,12 @@
 import edu.princeton.cs.algs4.Picture;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class SeamCarver {
     private Picture picture;
 
     public SeamCarver(Picture picture) {
-        this.picture = picture;
+        this.picture = new Picture(picture);
     }
 
     public Picture picture() {                  // current picture
