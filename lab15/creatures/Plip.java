@@ -19,6 +19,7 @@ public class Plip extends Creature {
     private int g;
     /** blue color. */
     private int b;
+    private double moveProbability = 0.5;
 
     /** creates plip with energy equal to E. */
     public Plip(double e) {
@@ -42,7 +43,9 @@ public class Plip extends Creature {
      *  that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        r = 99;
+        b = 76;
+        g = 63 + (int) (this.energy * (255 - 63) / 2);
         return color(r, g, b);
     }
 
@@ -55,11 +58,18 @@ public class Plip extends Creature {
      *  private static final variable. This is not required for this lab.
      */
     public void move() {
+        if (this.energy >= 0.15) {
+            this.energy -= 0.15;
+        }
     }
 
 
     /** Plips gain 0.2 energy when staying due to photosynthesis. */
     public void stay() {
+        this.energy += 0.2;
+        if (this.energy > 2.0) {
+            this.energy = 2.0;
+        }
     }
 
     /** Plips and their offspring each get 50% of the energy, with none
@@ -67,7 +77,8 @@ public class Plip extends Creature {
      *  Plip.
      */
     public Plip replicate() {
-        return this;
+        this.energy *= 0.5;
+        return new Plip(this.energy);
     }
 
     /** Plips take exactly the following actions based on NEIGHBORS:
@@ -81,6 +92,20 @@ public class Plip extends Creature {
      *  for an example to follow.
      */
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
+        List<Direction> empties = getNeighborsOfType(neighbors, "empty");
+        List<Direction> cloruses = getNeighborsOfType(neighbors, "cloruse");
+        if (empties.size() == 0) {
+            return new Action(Action.ActionType.STAY);
+        } else if (this.energy >= 1.0) {
+            Direction emptyDir = HugLifeUtils.randomEntry(empties);
+            return new Action(Action.ActionType.REPLICATE, emptyDir);
+        } else if (cloruses.size() != 0) {
+            if (HugLifeUtils.random() < moveProbability) {
+                Direction moveDir = HugLifeUtils.randomEntry(empties);
+                return new Action(Action.ActionType.MOVE, moveDir);
+            }
+        }
+
         return new Action(Action.ActionType.STAY);
     }
 
