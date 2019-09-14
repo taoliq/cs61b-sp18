@@ -1,3 +1,5 @@
+import javax.swing.text.Position;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -8,7 +10,11 @@ public class Boggle {
     
     // File path of dictionary file
     static String dictPath = "words.txt";
-//    static String dictPath = "trivial_words.txt";
+    private static String[] board;
+    private static TrieNode root;
+    private static List<Point>[][] adjs;
+    private static PriorityQueue<String> words;
+    private static boolean[][] visited;
 
     /**
      * Solves a Boggle puzzle.
@@ -23,13 +29,14 @@ public class Boggle {
     public static List<String> solve(int k, String boardFilePath) {
         In boardIn = new In(boardFilePath);
         In dictIn = new In(dictPath);
-        String[] board = boardIn.readAllStrings();
+        board = boardIn.readAllStrings();
         String[] dict = dictIn.readAllStrings();
-        TrieNode root = new TrieNode();
 
         checkErrorCases(k, board);
 
-        PriorityQueue<String> words = new PriorityQueue<>(k, new Comparator<String>() {
+        root = new TrieNode();
+        adjs = new ArrayList[board.length][board[0].length()];
+        words = new PriorityQueue<>(k, new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {
                     if (o1.length() != o2.length()) {
@@ -38,20 +45,23 @@ public class Boggle {
                     return o1.compareTo(o2);
                 }
             });
-        boolean[][] visited = new boolean[board.length][board[0].length()];
+        visited = new boolean[board.length][board[0].length()];
 
         //Initialize trie
         for (String w : dict) {
             root = TrieNode.put(root, w, 0);
+        }
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length(); j++) {
+                adjs[i][j] = getAdjacency(i, j);
+            }
         }
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length(); j++) {
                 char c = board[i].charAt(j);
                 TrieNode trieNode = TrieNode.get(root, c);
-                if (trieNode != null) {
-                    dfs(c + "", i, j, trieNode, words, board, visited);
-                }
+                dfs(c + "", i, j, trieNode);
             }
         }
 
@@ -64,8 +74,7 @@ public class Boggle {
         return res;
     }
 
-    private static void dfs(String string, int x, int y, TrieNode trieNode,
-                            Queue<String> words, String[] board, boolean[][] visited) {
+    private static void dfs(String string, int x, int y, TrieNode trieNode) {
         if (trieNode == null) {
             return;
         }
@@ -75,31 +84,29 @@ public class Boggle {
             words.add(string);
         }
 
-        List<int[]> points = getAdjacency(x, y, visited);
-        for (int[] p: points) {
-            int nx = p[0];
-            int ny = p[1];
-            char c = board[nx].charAt(ny);
-            TrieNode next = TrieNode.get(trieNode, c);
-            if (next != null) {
-                dfs(string + c, nx, ny, next, words, board, visited);
+        for (Point p : adjs[x][y]) {
+            if (visited[p.x][p.y]) {
+                continue;
             }
+            char c = board[p.x].charAt(p.y);
+            TrieNode next = TrieNode.get(trieNode, c);
+            dfs(string + c, p.x, p.y, next);
         }
 
         visited[x][y] = false;
     }
 
-    private static List<int[]> getAdjacency(int x, int y, boolean[][] visited) {
-        ArrayList<int[]> adjs = new ArrayList<>();
+    private static List<Point> getAdjacency(int x, int y) {
+        ArrayList<Point> adjs = new ArrayList<>();
         for (int nx = x - 1; nx <= x + 1; nx++) {
             for (int ny = y - 1; ny <= y + 1; ny++) {
-                if (nx < 0 || nx >= visited.length || ny < 0 || ny >= visited[0].length) {
+                if (nx < 0 || nx >= board.length || ny < 0 || ny >= board[0].length()) {
                     continue;
                 }
-                if (visited[nx][ny]) {
+                if (nx == x && ny == y) {
                     continue;
                 }
-                adjs.add(new int[]{nx, ny});
+                adjs.add(new Point(nx, ny));
             }
         }
         return adjs;
