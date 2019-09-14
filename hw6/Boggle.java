@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class Boggle {
@@ -27,14 +26,14 @@ public class Boggle {
         checkErrorCases(k, board);
 
         PriorityQueue<String> words = new PriorityQueue<>(k, new Comparator<String>() {
-                    @Override
-                    public int compare(String o1, String o2) {
-                        if (o1.length() != o2.length()) {
-                            return o2.length() - o1.length();
-                        }
-                        return o1.compareTo(o2);
+                @Override
+                public int compare(String o1, String o2) {
+                    if (o1.length() != o2.length()) {
+                        return o2.length() - o1.length();
                     }
-                });
+                    return o1.compareTo(o2);
+                }
+            });
         boolean[][] visited = new boolean[board.length][board[0].length()];
 
         //Initialize trie
@@ -60,8 +59,10 @@ public class Boggle {
     }
 
     private static void dfs(String string, int x, int y, TrieNode trieNode,
-                     Queue<String> words, String[] board, boolean[][] visited) {
-        if (trieNode == null) return;
+                            Queue<String> words, String[] board, boolean[][] visited) {
+        if (trieNode == null) {
+            return;
+        }
 
         visited[x][y] = true;
         if (trieNode.val && string.length() >= 3 && !words.contains(string)) {
@@ -82,8 +83,8 @@ public class Boggle {
 
     private static List<int[]> getAdjacency(int x, int y, boolean[][] visited) {
         ArrayList<int[]> adjs = new ArrayList<>();
-        for (int nx = x-1; nx <= x+1; nx++) {
-            for (int ny = y-1; ny <= y+1; ny++) {
+        for (int nx = x - 1; nx <= x + 1; nx++) {
+            for (int ny = y - 1; ny <= y + 1; ny++) {
                 if (nx < 0 || nx >= visited.length || ny < 0 || ny >= visited[0].length) {
                     continue;
                 }
@@ -117,7 +118,8 @@ public class Boggle {
     }
 
     public static void main(String[] args) {
-        solve(7, "exampleBoard.txt");
+        List<String> res = solve(7, "exampleBoard.txt");
+        System.out.println(res);
         solve(7, "exampleBoard2.txt");
     }
 }
