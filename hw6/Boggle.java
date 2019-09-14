@@ -1,4 +1,8 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.List;
+import java.util.Queue;
 
 public class Boggle {
     
@@ -45,7 +49,9 @@ public class Boggle {
             for (int j = 0; j < board[i].length(); j++) {
                 char c = board[i].charAt(j);
                 TrieNode trieNode = TrieNode.get(root, c);
-                dfs(c + "", i, j, trieNode, words, board, visited);
+                if (trieNode != null) {
+                    dfs(c + "", i, j, trieNode, words, board, visited);
+                }
             }
         }
 
@@ -75,7 +81,9 @@ public class Boggle {
             int ny = p[1];
             char c = board[nx].charAt(ny);
             TrieNode next = TrieNode.get(trieNode, c);
-            dfs(string + c, nx, ny, next, words, board, visited);
+            if (next != null) {
+                dfs(string + c, nx, ny, next, words, board, visited);
+            }
         }
 
         visited[x][y] = false;
