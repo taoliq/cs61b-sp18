@@ -1,10 +1,8 @@
-import javax.swing.text.Position;
-import java.awt.*;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.List;
-import java.util.Queue;
 
 public class Boggle {
     
@@ -32,7 +30,7 @@ public class Boggle {
         board = boardIn.readAllStrings();
         String[] dict = dictIn.readAllStrings();
 
-        checkErrorCases(k, board);
+        checkErrorCases(k);
 
         root = new TrieNode();
         adjs = new ArrayList[board.length][board[0].length()];
@@ -51,11 +49,11 @@ public class Boggle {
         for (String w : dict) {
             root = TrieNode.put(root, w, 0);
         }
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length(); j++) {
-                adjs[i][j] = getAdjacency(i, j);
-            }
-        }
+//        for (int i = 0; i < board.length; i++) {
+//            for (int j = 0; j < board[i].length(); j++) {
+//                adjs[i][j] = getAdjacency(i, j);
+//            }
+//        }
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length(); j++) {
@@ -84,6 +82,9 @@ public class Boggle {
             words.add(string);
         }
 
+        if (adjs[x][y] == null) {
+            adjs[x][y] = getAdjacency(x, y);
+        }
         for (Point p : adjs[x][y]) {
             if (visited[p.x][p.y]) {
                 continue;
@@ -112,8 +113,8 @@ public class Boggle {
         return adjs;
     }
 
-    private static void checkErrorCases(int k, String[] board) {
-        if (!isRectangular(board)) {
+    private static void checkErrorCases(int k) {
+        if (!isRectangular()) {
             throw new IllegalArgumentException("The input board is not rectangular.\n");
         }
 
@@ -122,7 +123,7 @@ public class Boggle {
         }
     }
 
-    private static boolean isRectangular(String[] board) {
+    private static boolean isRectangular() {
         int wid = board[0].length();
         for (String row : board) {
             if (row.length() != wid) {
